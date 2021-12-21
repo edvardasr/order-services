@@ -32,10 +32,11 @@ public class Repository {
 
 		CodecRegistry codecRegistry = MongoClient.getDefaultCodecRegistry();
 		Codec<Document> documentCodec = codecRegistry.get(Document.class);
-		Codec<Customer> dataCodec = new CustomerCodec(documentCodec);
+		Codec<Customer> customerCodec = new CustomerCodec(documentCodec);
+		Codec<OrderedService> orderedServiceCodec = new OrderedServiceCodec(documentCodec);
 
 		codecRegistry = CodecRegistries.fromRegistries(MongoClient.getDefaultCodecRegistry(),
-				CodecRegistries.fromCodecs(documentCodec, dataCodec));
+				CodecRegistries.fromCodecs(documentCodec, customerCodec, orderedServiceCodec));
 
 		MongoClientOptions options = MongoClientOptions.builder().codecRegistry(codecRegistry).build();
 
